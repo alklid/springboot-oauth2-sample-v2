@@ -1,0 +1,53 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+### grant_type : password
+POST http://localhost:20000/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
+
+username=alklid&password=1111&grant_type=password
+
+
+### grant_type : client_credentials
+POST http://localhost:20000/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
+
+grant_type=client_credentials
+
+
+### grant_type : authorization_code
+# http://localhost:20000/oauth/authorize?client_id=oauth_test_client_id&redirect_uri=http://localhost:20000/version&response_type=code&scope=MANAGE&state=bn6q6ru91ygkzwo8rfc0s1f7
+POST http://localhost:20000/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
+
+code=OlO9qJ&state=bn6q6ru91ygkzwo8rfc0s1f7&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A20000%2Fversion&scope=MANAGE
+
+
+### grant_type : implicit
+# http://localhost:20000/oauth/authorize?client_id=oauth_test_client_id&redirect_uri=http://localhost:20000/version&response_type=token&scope=MANAGE&state=xn6q6ru91ygkzwo8rfc0s1f7
+
+
+### grant_type : refresh_token
+POST http://localhost:20000/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
+
+grant_type=refresh_token&refresh_token=75a9e79b-74d3-4d03-b61e-c5e2cdac4cf6
+
+
+### check_token
+POST http://localhost:20000/oauth/check_token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
+
+token=59a573f5-272f-4dda-a271-78fcd5763c1a
+
+
+###
