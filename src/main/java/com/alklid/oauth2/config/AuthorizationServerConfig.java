@@ -29,12 +29,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private DataSource dataSource;
 
+    @Bean
+    public TokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
+
+    @Bean
+    public ApprovalStore approvalStore() {
+        return new JdbcApprovalStore(dataSource);
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        //@formatter:off
-        clients
-                .jdbc(dataSource);
-        //@formatter:on
+        // Client Details 정보는 jdbc를 통해 dataSource로부터 가져오도록 설정
+        clients.jdbc(dataSource);
     }
 
     @Override
@@ -44,7 +52,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // checkTokenAccess : /oauth/check_token = isAuthenticated(), 인증받은 token만 허용
         oauthServer.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
+                .passwordEncoder(SecurityConfig.oauthClientPasswordEncoder());
     }
 
     @Override
@@ -58,20 +66,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //@formatter:on
     }
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }
 
-    @Bean
-    public ApprovalStore approvalStore() {
-        return new JdbcApprovalStore(dataSource);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(4);
-    }
 
 
 }
