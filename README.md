@@ -1,7 +1,7 @@
 # TODO
 * oauth
-    * authorization_code 인증시 code 값을 길게
     * scope approval화면 custom - 요청한 scope이 모두 포함된채로 허용할것인지만 물어보도록
+        * https://projects.spring.io/spring-security-oauth/docs/oauth2.html - Customizing the UI
 * 사용자 DB사용
 * UI 변경
     * /login
@@ -16,4 +16,5 @@
     * https://spring.io/guides/gs/centralized-configuration/
 * 정리할것
     * pwd_encoder_customize branch에서 passwordencoder 변경된 사항 정리하기
+    * authorization_code 인증시 code 값을 길게 
     

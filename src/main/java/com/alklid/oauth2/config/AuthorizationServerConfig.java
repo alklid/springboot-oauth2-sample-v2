@@ -1,5 +1,6 @@
 package com.alklid.oauth2.config;
 
+import com.alklid.oauth2.domain.oauth.custom.CustomRandomValueAuthorizationCodeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Qualifier("oauthClientPasswordEncoder")
     private PasswordEncoder oauthClientPasswordEncoder;
 
+    @Autowired
+    private CustomRandomValueAuthorizationCodeServices customRandomValueAuthorizationCodeServices;
+
     @Bean
     public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
@@ -67,7 +71,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .approvalStore(approvalStore())
                 .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
-        ;
+                .authorizationCodeServices(customRandomValueAuthorizationCodeServices);
         //@formatter:on
     }
 
