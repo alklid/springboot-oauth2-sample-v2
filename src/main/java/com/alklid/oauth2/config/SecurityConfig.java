@@ -20,13 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public static PasswordEncoder oauthClientPasswordEncoder() {
+    public PasswordEncoder oauthClientPasswordEncoder() {
         //return new BCryptPasswordEncoder(4);
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
-    public static PasswordEncoder userPasswordEncoder() {
+    public PasswordEncoder userPasswordEncoder() {
         //return new BCryptPasswordEncoder(8);
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }

@@ -1,6 +1,7 @@
 package com.alklid.oauth2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    @Qualifier("oauthClientPasswordEncoder")
+    private PasswordEncoder oauthClientPasswordEncoder;
+
     @Bean
     public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
@@ -52,7 +57,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // checkTokenAccess : /oauth/check_token = isAuthenticated(), 인증받은 token만 허용
         oauthServer.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(SecurityConfig.oauthClientPasswordEncoder());
+                .passwordEncoder(oauthClientPasswordEncoder);
     }
 
     @Override

@@ -9,7 +9,7 @@ INSERT INTO users(
 ) VALUES (
   'alklid@sample.com',
   'alklid',
-  '{bcrypt}$2a$08$6J.nxiOn6T4tCQO0OrcJxOmtmyFaaW0tSbusAZsZi9Q1yWMpUtzqu',
+  '{bcrypt}$2a$10$VSbq3dNkkcoDpAaaRcVm7.gYruPiZPp7KXxF8d/zpLjy7FLeLznt.',
   timezone('utc'::text, now()),
   timezone('utc'::text, now())
 );
