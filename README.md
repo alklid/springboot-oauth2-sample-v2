@@ -1,11 +1,9 @@
 # TODO
-* oauth
-    * scope approval화면 custom - 요청한 scope이 모두 포함된채로 허용할것인지만 물어보도록
-        * https://projects.spring.io/spring-security-oauth/docs/oauth2.html - Customizing the UI
 * 사용자 DB사용
 * UI 변경
     * /login
-    * /oauth/authorize : OAuth Approval
+    * scope approval화면 custom - 요청한 scope이 모두 포함된채로 허용할것인지만 물어보도록
+            * https://projects.spring.io/spring-security-oauth/docs/oauth2.html - Customizing the UI
 * 사용자 관리API
     * 정보
 * get properties(yml) best practice
