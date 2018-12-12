@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS oauth_client_details;
 DROP TABLE IF EXISTS oauth_client_token;
 DROP TABLE IF EXISTS oauth_access_token;
@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS oauth_code;
 DROP TABLE IF EXISTS oauth_approvals;
 
 
-CREATE TABLE users (
+CREATE TABLE account (
 	sid bigserial NOT NULL UNIQUE,
 	email text NOT NULL UNIQUE,
 	name text NOT NULL DEFAULT '',

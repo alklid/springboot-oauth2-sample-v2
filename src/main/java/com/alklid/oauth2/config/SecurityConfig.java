@@ -1,8 +1,6 @@
 package com.alklid.oauth2.config;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,18 +8,23 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.annotation.Resource;
 
 @EnableWebSecurity
 @Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Resource
+    private UserDetailsService userDetailsService;
+
     @Bean
     public PasswordEncoder oauthClientPasswordEncoder() {
-        //return new BCryptPasswordEncoder(4);
+        // TODO DefaultEncoder 변경 및 strength 변경시 Custom 필요함
+        //return new BCryptPasswordEncoder(4); -- default strength(4)
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
@@ -54,9 +57,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalConfigure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder passwordEncoder = userPasswordEncoder();
-
         //@formatter:off
+        auth
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(userPasswordEncoder());
+        //@formatter:on
+
+        /*
+        // in-Memory use
+        //@formatter:off
+        PasswordEncoder passwordEncoder = userPasswordEncoder();
         auth
             .inMemoryAuthentication()
             .passwordEncoder(userPasswordEncoder())
@@ -64,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .withUser("alklid2").password(passwordEncoder.encode("2222")).roles("MANAGE");
         //@formatter:on
-
+        */
     }
 
 }

@@ -6,6 +6,7 @@
             * https://projects.spring.io/spring-security-oauth/docs/oauth2.html - Customizing the UI
 * 사용자 관리API
     * 정보
+* Error message resource 참조방식으로 변경
 * get properties(yml) best practice
     * https://github.com/cheese10yun/spring-jpa-best-practices/blob/master/doc/step-10.md?fbclid=IwAR2XuR33TdKCb8VIejfm43nyABtEVRQoPZQWNElGVcIapzkttfnb86pOaew
 * Entity

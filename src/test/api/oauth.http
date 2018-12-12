@@ -10,7 +10,7 @@ POST http://localhost:20000/oauth/token
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
 
-username=alklid&password=1111&grant_type=password
+username=alklid@sample.com&password=111111&grant_type=password
 
 
 ### grant_type : client_credentials
@@ -27,7 +27,7 @@ POST http://localhost:20000/oauth/token
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
 
-code=gQnU2wSvoqv5T9qD&state=bn6q6ru91ygkzwo8rfc0s1f7&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A20000%2Fversion&scope=MANAGE
+code=59zkByCk4iEk8jIvRNA9oG2RsZM1hyuB&state=bn6q6ru91ygkzwo8rfc0s1f7&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A20000%2Fversion&scope=MANAGE
 
 
 
@@ -48,7 +48,7 @@ POST http://localhost:20000/oauth/check_token
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
 
-token=7cd00015-6639-4c7f-ace4-5e563d39261d
+token=791e70e1-f33b-4815-a33b-14273d20ea15
 
 
 ###

@@ -1,6 +1,6 @@
 -- 1*6
 
-INSERT INTO users(
+INSERT INTO account(
   email,
   name,
   pwd,
