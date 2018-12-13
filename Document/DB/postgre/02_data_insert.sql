@@ -4,12 +4,14 @@ INSERT INTO account(
   email,
   name,
   pwd,
+  permissions,
   created_at,
   last_modified_at
 ) VALUES (
   'alklid@sample.com',
   'alklid',
   '{bcrypt}$2a$10$VSbq3dNkkcoDpAaaRcVm7.gYruPiZPp7KXxF8d/zpLjy7FLeLznt.',
+  'USER:INFO'
   timezone('utc'::text, now()),
   timezone('utc'::text, now())
 );

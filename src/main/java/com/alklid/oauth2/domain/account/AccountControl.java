@@ -25,7 +25,8 @@ public class AccountControl {
     // info
     @PreAuthorize(  "isAuthenticated()" +
                     " and #oauth2.hasScope('MANAGE')" +
-                    " and hasAuthority('USER:INFO')")
+                    " and hasAuthority('USER:INFO')" +
+                    " and @customSecurityPermissionEvaluator.isMe(authentication, #users_email)")
     @RequestMapping(method = RequestMethod.GET, value = "/{users_email}")
     public ResponseEntity<AccountDto.Response> getAccount(  HttpServletRequest httpRequest,
                                                             @PathVariable("v") String v,
