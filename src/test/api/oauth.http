@@ -48,7 +48,7 @@ POST http://localhost:20000/oauth/check_token
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
 
-token=791e70e1-f33b-4815-a33b-14273d20ea15
+token=473397ef-7864-4671-9d92-d4a83c6d15e0
 
 
 ###

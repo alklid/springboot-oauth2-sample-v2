@@ -6,9 +6,9 @@
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
 
-### /api/{v}/account/{users_sid}
-GET http://localhost:20000/api/{v}/account/{users_sid}
+### /api/{v}/account/{users_email}
+GET http://localhost:20000/api/1.0/account/alklid@sample.com
 Content-Type: application/json
-
+Authorization: Bearer 473397ef-7864-4671-9d92-d4a83c6d15e0
 
 ###

@@ -26,13 +26,13 @@ public class AccountControl {
     @PreAuthorize(  "isAuthenticated()" +
                     " and #oauth2.hasScope('MANAGE')" +
                     " and hasAuthority('USER:INFO')")
-    @RequestMapping(method = RequestMethod.GET, value = "/{users_sid}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{users_email}")
     public ResponseEntity<AccountDto.Response> getAccount(  HttpServletRequest httpRequest,
                                                             @PathVariable("v") String v,
-                                                            @PathVariable("users_sid") Long users_sid) {
+                                                            @PathVariable("users_email") String users_email) {
         switch (v) {
             case "1.0":
-                AccountEntity user = accountService.getAccount(httpRequest, users_sid);
+                AccountEntity user = accountService.getAccount(httpRequest, users_email);
                 return new ResponseEntity<>(modelMapper.map(user, AccountDto.Response.class), HttpStatus.OK);
             default:
                 throw new DefineException.InvalidAPIVersion(v, httpRequest);
