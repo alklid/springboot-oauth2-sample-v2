@@ -23,24 +23,24 @@ logging:
 # database
 spring:
   jpa:
-    database: postgresql
+    database: mysql
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
         format_sql: true
         jdbc.lob.non_contextual_creation: true
+        jdbc.time_zone: UTC
   datasource:
     hikari:
-      jdbc-url: jdbc:postgresql://127.0.0.1:5432/oauth_test
-      username: postgres
-      password: postgres
-      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/openapi_local_test?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+      username: openapi
+      password: openapi
+      driver-class-name: com.mysql.jdbc.Driver
       minimum-idle: 10
       maximum-pool-size : 20
       idle-timeout: 30000
       pool-name: SpringBootJPAHikariCP
       max-lifetime: 2000000
       connection-timeout: 30000
-
