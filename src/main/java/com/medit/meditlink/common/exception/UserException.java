@@ -2,6 +2,7 @@ package com.medit.meditlink.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class UserException extends GlobalException {
 

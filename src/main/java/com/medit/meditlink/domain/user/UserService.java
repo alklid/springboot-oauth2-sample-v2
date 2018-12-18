@@ -1,7 +1,7 @@
-package com.medit.meditlink.domain.account;
+package com.medit.meditlink.domain.user;
 
 import com.medit.meditlink.common.exception.UserException;
-import com.medit.meditlink.domain.account.model.AccountEntity;
+import com.medit.meditlink.domain.user.model.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,16 @@ import java.util.Optional;
 
 @EnableJpaAuditing
 @Service
-public class AccountService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
 	@Autowired
-	private AccountRepository accountRepo;
+	private UserRepository userRepo;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	// UserDetailsService impl
 	public UserDetails loadUserByUsername(final String email) {
-		AccountEntity user = accountRepo.findByEmail(email);
+		UserEntity user = userRepo.findByEmail(email);
 		if (user == null) {
 			throw new UserException.NotFound(null, email);
 		}
@@ -53,20 +53,20 @@ public class AccountService implements UserDetailsService {
 	}
 
 
-	public AccountEntity getAccount(final Long users_sid) {
+	public UserEntity getAccount(final Long users_sid) {
 		return Optional.ofNullable(getBySid(users_sid))
 				.orElseThrow(() -> new UserException.NotFound(users_sid, null));
 	}
 
 
-	public AccountEntity getAccount(final String users_email) {
+	public UserEntity getAccount(final String users_email) {
 		return Optional.ofNullable(getByEmail(users_email))
 				.orElseThrow(() -> new UserException.NotFound(null, users_email));
 	}
 
 
-	private AccountEntity getBySid(final Long users_sid) {
-		Optional<AccountEntity> user = accountRepo.findById(users_sid);
+	private UserEntity getBySid(final Long users_sid) {
+		Optional<UserEntity> user = userRepo.findById(users_sid);
 		if (!user.isPresent()) {
 			return null;
 		}
@@ -74,8 +74,8 @@ public class AccountService implements UserDetailsService {
 	}
 
 
-	private AccountEntity getByEmail(final String users_email) {
-		AccountEntity user = accountRepo.findByEmail(users_email);
+	private UserEntity getByEmail(final String users_email) {
+		UserEntity user = userRepo.findByEmail(users_email);
 		return user;
 	}
 

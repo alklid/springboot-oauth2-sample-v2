@@ -1,11 +1,12 @@
-package com.medit.meditlink.domain.account.model;
+package com.medit.meditlink.domain.user.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class AccountDto {
+public class UserDto {
 
     @Data
     public static class Response {
