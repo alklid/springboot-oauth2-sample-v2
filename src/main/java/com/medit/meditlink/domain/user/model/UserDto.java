@@ -14,11 +14,7 @@ public class UserDto {
         private String email;
         private String name;
         private String permissions;
-
-        @JsonProperty("created_at")
         private LocalDateTime createdAt;
-
-        @JsonProperty("last_modified_at")
         private LocalDateTime lastModifiedAt;
     }
 }
