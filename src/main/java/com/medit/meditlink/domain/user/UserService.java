@@ -1,6 +1,7 @@
 package com.medit.meditlink.domain.user;
 
 import com.medit.meditlink.common.exception.UserException;
+import com.medit.meditlink.domain.user.model.UserDto;
 import com.medit.meditlink.domain.user.model.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,4 +81,14 @@ public class UserService implements UserDetailsService {
 		return user;
 	}
 
+	// update user
+	@Transactional
+	public UserEntity updateAccount(String users_email, UserDto.Update user) {
+		UserEntity updateUser = getByEmail(users_email);
+		updateUser.setName(user.getName());
+		updateUser.setDateUpdate(user.getDateUpdate());
+
+		// update
+		return userRepo.save(updateUser);
+	}
 }

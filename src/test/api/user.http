@@ -9,11 +9,21 @@
 ### /api/{v}/account/{users_email}
 GET http://localhost:20000/v1/users/alklid@sample.com
 Content-Type: application/json
-Authorization: Bearer 0a4a807f-ccc6-488b-bf53-1df89c30131d
+Authorization: Bearer 9578321a-1da0-4b44-90c7-9a6c80bca830
 
 ### /api/{v}/account/{users_email} - 403 denied
 GET http://localhost:20000/v1/users/alklid2@sample.com
 Content-Type: application/json
-Authorization: Bearer 0a4a807f-ccc6-488b-bf53-1df89c30131d
+Authorization: Bearer 9578321a-1da0-4b44-90c7-9a6c80bca830
+
+### /api/{v}/account/{users_email}
+PUT http://localhost:20000/v1/users/alklid@sample.com
+Authorization: Bearer 9578321a-1da0-4b44-90c7-9a6c80bca830
+Content-Type: application/json
+
+{
+  "name": "",
+  "dateUpdate": "2018-12-18T11:38:20Z"
+}
 
 ###

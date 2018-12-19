@@ -7,11 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.util.WebUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +91,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         //BindingResult
         if (e.getBindingResult().hasErrors()) {
             List<String> errors = new ArrayList<>();
-            for (ObjectError oe : e.getBindingResult().getAllErrors()) {
-                errors.add(oe.getDefaultMessage());
+            for (FieldError fe : e.getBindingResult().getFieldErrors()) {
+                errors.add("[" + fe.getField() + "] " + fe.getDefaultMessage());
             }
             errorResponseDto.setErrors(errors);
         }
@@ -107,10 +113,32 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(modelMapper.map(errorResponseDto, ErrorResponseDto.Response.class), httpStatus);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(
+            Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
+        ErrorResponseDto.Error errorResponseDto = new ErrorResponseDto.Error();
+        errorResponseDto.setStatus(status.value());
+        // TODO ResponseEntityExceptionHandler 에서의 Exception별로 Code 재정의
+        errorResponseDto.setCode(ErrorCodeEnum.GlobalError.INVALID_API_VERSION.getCode());
+        errorResponseDto.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
 
+        if (ex instanceof MethodArgumentNotValidException) {
+            //BindingResult
+            if (((MethodArgumentNotValidException) ex).getBindingResult().hasErrors()) {
+                List<String> errors = new ArrayList<>();
+                for (FieldError fe : ((MethodArgumentNotValidException) ex).getBindingResult().getFieldErrors()) {
+                    errors.add("[" + fe.getField() + "] " + fe.getDefaultMessage());
+                }
+                errorResponseDto.setErrors(errors);
+            }
+        }
 
-
+        if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
+            request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+        }
+        return new ResponseEntity<>(modelMapper.map(errorResponseDto, ErrorResponseDto.Response.class), headers, status);
+    }
 
 
 }

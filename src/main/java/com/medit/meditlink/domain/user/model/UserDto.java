@@ -1,10 +1,15 @@
 package com.medit.meditlink.domain.user.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public class UserDto {
 
@@ -14,7 +19,16 @@ public class UserDto {
         private String email;
         private String name;
         private String permissions;
-        private LocalDateTime createdAt;
-        private LocalDateTime lastModifiedAt;
+        private Instant createdAt;
+        private Instant lastModifiedAt;
+        private Instant dateUpdate;
+    }
+
+    @Data
+    public static class Update {
+
+        @NotBlank
+        private String name;
+        private Instant dateUpdate;
     }
 }
