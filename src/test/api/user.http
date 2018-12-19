@@ -22,7 +22,7 @@ Authorization: Bearer 9578321a-1da0-4b44-90c7-9a6c80bca830
 Content-Type: application/json
 
 {
-  "name": "",
+  "name": "alklid",
   "dateUpdate": "2018-12-18T11:38:20Z"
 }
 

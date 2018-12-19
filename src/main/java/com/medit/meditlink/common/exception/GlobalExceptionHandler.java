@@ -119,8 +119,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ErrorResponseDto.Error errorResponseDto = new ErrorResponseDto.Error();
         errorResponseDto.setStatus(status.value());
-        // TODO ResponseEntityExceptionHandler 에서의 Exception별로 Code 재정의
-        errorResponseDto.setCode(ErrorCodeEnum.GlobalError.INVALID_API_VERSION.getCode());
+        errorResponseDto.setCode(ErrorCodeEnum.ResponseEntityError.getCode(ex));
         errorResponseDto.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
 
         if (ex instanceof MethodArgumentNotValidException) {
