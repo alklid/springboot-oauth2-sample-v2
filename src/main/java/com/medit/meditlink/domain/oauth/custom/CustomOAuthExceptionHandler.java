@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 
 @Component
 public class CustomOAuthExceptionHandler extends AbstractOAuth2SecurityExceptionHandler implements AccessDeniedHandler {
@@ -30,6 +31,7 @@ public class CustomOAuthExceptionHandler extends AbstractOAuth2SecurityException
     public static class AuthTokenException {
         public static ResponseEntity getException(OAuth2Exception oAuth2Exception) {
             ErrorResponseDto.Response errorResponse = new ErrorResponseDto.Response();
+            errorResponse.setTimestamp(Instant.now());
             errorResponse.setStatus(oAuth2Exception.getHttpErrorCode());
             errorResponse.setCode(oAuth2Exception.getOAuth2ErrorCode());
             errorResponse.setPath("/oauth/token");

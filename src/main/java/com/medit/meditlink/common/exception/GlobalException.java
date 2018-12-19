@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,13 @@ public class GlobalException {
 	public static class InvalidAPIVersion extends RuntimeException {
 		@Getter
 		String apiVersion;
+	}
+
+
+	@AllArgsConstructor
+	public static class InvalidSchemaVersion extends RuntimeException {
+		@Getter
+		String schemaVersion;
 	}
 
 
@@ -84,6 +92,7 @@ public class GlobalException {
 				String path = getPath();
 
 				ErrorResponseDto.Response errorResponse = new ErrorResponseDto.Response();
+				errorResponse.setTimestamp(Instant.now());
 				errorResponse.setStatus(statusCode);
 				errorResponse.setCode(code);
 				errorResponse.setPath(path);

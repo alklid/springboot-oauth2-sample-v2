@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.WebUtils;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({
             // GlobalException Define
             GlobalException.InvalidAPIVersion.class,
+            GlobalException.InvalidSchemaVersion.class,
             GlobalException.AccessDenied.class,
             GlobalException.BadReqeust.class,
 
@@ -40,28 +43,31 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> GlobalHandleException(Exception ex, WebRequest request) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status;
-        ErrorResponseDto.Error errorResponseDto = new ErrorResponseDto.Error();
+        ErrorResponseDto.Error errorResponseDto = new ErrorResponseDto.Error(request);
 
         // GlobalException Handle
         if (ex instanceof GlobalException.InvalidAPIVersion) {
             status = HttpStatus.BAD_REQUEST;
             errorResponseDto.setStatus(status.value());
             errorResponseDto.setCode(ErrorCodeEnum.GlobalError.INVALID_API_VERSION.getCode());
-            errorResponseDto.setPath(request.getContextPath());
+            return this.DefaultHandler(status, errorResponseDto);
+        }
+        else if (ex instanceof GlobalException.InvalidSchemaVersion) {
+            status = HttpStatus.FORBIDDEN;
+            errorResponseDto.setStatus(status.value());
+            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.INVALID_SCHEMA_VERSION.getCode());
             return this.DefaultHandler(status, errorResponseDto);
         }
         else if (ex instanceof GlobalException.AccessDenied) {
             status = HttpStatus.FORBIDDEN;
             errorResponseDto.setStatus(status.value());
             errorResponseDto.setCode(ErrorCodeEnum.GlobalError.ACCESS_DENIED.getCode());
-            errorResponseDto.setPath(request.getContextPath());
             return this.DefaultHandler(status, errorResponseDto);
         }
         else if (ex instanceof GlobalException.BadReqeust) {
             status = HttpStatus.BAD_REQUEST;
             errorResponseDto.setStatus(status.value());
             errorResponseDto.setCode(ErrorCodeEnum.GlobalError.BAD_REQUEST.getCode());
-            errorResponseDto.setPath(request.getContextPath());
             return this.BadRequestHandler((GlobalException.BadReqeust) ex, status, errorResponseDto);
         }
 
@@ -70,7 +76,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             status = HttpStatus.NOT_FOUND;
             errorResponseDto.setStatus(status.value());
             errorResponseDto.setCode(ErrorCodeEnum.UserError.NOT_FOUND.getCode());
-            errorResponseDto.setPath(request.getContextPath());
+            return this.DefaultHandler(status, errorResponseDto);
+        }
+
+        else if (ex instanceof NoHandlerFoundException) {
+            status = HttpStatus.NOT_FOUND;
+            errorResponseDto.setStatus(status.value());
+            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.NO_HANDLER_FOUND.getCode());
             return this.DefaultHandler(status, errorResponseDto);
         }
 
@@ -79,7 +91,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             errorResponseDto.setStatus(status.value());
             errorResponseDto.setCode(ErrorCodeEnum.GlobalError.UNKNOWN_EXCEPTION.getCode());
-            errorResponseDto.setPath(request.getContextPath());
             return this.DefaultHandler(status, errorResponseDto);
         }
     }
@@ -118,6 +129,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         ErrorResponseDto.Error errorResponseDto = new ErrorResponseDto.Error();
+        errorResponseDto.setTimestamp(Instant.now());
         errorResponseDto.setStatus(status.value());
         errorResponseDto.setCode(ErrorCodeEnum.ResponseEntityError.getCode(ex));
         errorResponseDto.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
@@ -138,6 +150,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return new ResponseEntity<>(modelMapper.map(errorResponseDto, ErrorResponseDto.Response.class), headers, status);
     }
-
 
 }

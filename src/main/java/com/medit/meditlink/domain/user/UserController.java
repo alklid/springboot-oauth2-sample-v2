@@ -1,6 +1,7 @@
 package com.medit.meditlink.domain.user;
 
 
+import com.medit.meditlink.common.Constant;
 import com.medit.meditlink.common.Router;
 import com.medit.meditlink.common.exception.GlobalException;
 import com.medit.meditlink.domain.user.model.UserDto;
@@ -34,13 +35,15 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/{users_email}")
     public ResponseEntity<UserDto.Response> getAccount(HttpServletRequest httpRequest,
                                                         @PathVariable("v") String v,
+                                                        @PathVariable("s") String s,
                                                         @PathVariable("users_email") String users_email) {
-        switch (v) {
-            case "v1":
+        switch (s) {
+            case Constant.SchemaVersion.SCHEMA_1:
+            case Constant.SchemaVersion.SCHEMA_LATEST:
                 UserEntity user = userService.getAccount(users_email);
                 return new ResponseEntity<>(modelMapper.map(user, UserDto.Response.class), HttpStatus.OK);
             default:
-                throw new GlobalException.InvalidAPIVersion(v);
+                throw new GlobalException.InvalidSchemaVersion(s);
         }
     }
 
@@ -52,14 +55,16 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{users_email}")
     public ResponseEntity<UserDto.Response> updateAccount(HttpServletRequest httpRequest,
                                                           @PathVariable("v") String v,
+                                                          @PathVariable("s") String s,
                                                           @PathVariable("users_email") String users_email,
                                                           @RequestBody @Valid UserDto.Update user) {
-        switch (v) {
-            case "v1":
+        switch (s) {
+            case Constant.SchemaVersion.SCHEMA_1:
+            case Constant.SchemaVersion.SCHEMA_LATEST:
                 UserEntity updateUser = userService.updateAccount(users_email, user);
                 return new ResponseEntity<>(modelMapper.map(updateUser, UserDto.Response.class), HttpStatus.OK);
             default:
-                throw new GlobalException.InvalidAPIVersion(v);
+                throw new GlobalException.InvalidSchemaVersion(s);
         }
     }
 }

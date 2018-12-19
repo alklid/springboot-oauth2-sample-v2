@@ -26,7 +26,6 @@ public class UserDto {
 
     @Data
     public static class Update {
-
         @NotBlank
         private String name;
         private Instant dateUpdate;

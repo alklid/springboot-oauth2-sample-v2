@@ -7,18 +7,18 @@
 
 
 ### /api/{v}/account/{users_email}
-GET http://localhost:20000/v1/users/alklid@sample.com
+GET http://localhost:20000/v1/latest/users/alklid@sample.com
 Content-Type: application/json
-Authorization: Bearer 9578321a-1da0-4b44-90c7-9a6c80bca830
+Authorization: Bearer db7577b3-620a-4983-b874-32c4fb46219e
 
 ### /api/{v}/account/{users_email} - 403 denied
-GET http://localhost:20000/v1/users/alklid2@sample.com
+GET http://localhost:20000/v1/s1/users/alklid2@sample.com
 Content-Type: application/json
-Authorization: Bearer 9578321a-1da0-4b44-90c7-9a6c80bca830
+Authorization: Bearer db7577b3-620a-4983-b874-32c4fb46219e
 
 ### /api/{v}/account/{users_email}
-PUT http://localhost:20000/v1/users/alklid@sample.com
-Authorization: Bearer 9578321a-1da0-4b44-90c7-9a6c80bca830
+PUT http://localhost:20000/v1/s1/users/alklid@sample.com
+Authorization: Bearer db7577b3-620a-4983-b874-32c4fb46219e
 Content-Type: application/json
 
 {
