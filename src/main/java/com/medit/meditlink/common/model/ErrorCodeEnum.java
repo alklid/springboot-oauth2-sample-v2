@@ -2,7 +2,6 @@ package com.medit.meditlink.common.model;
 
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.validation.BindException;
@@ -18,12 +17,6 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 public class ErrorCodeEnum {
-
-    private interface ErrorCode {
-        public String getCode();
-        public String getMsg();
-    }
-
 
     public static enum GlobalError {
         UNKNOWN_EXCEPTION("unknown_exception", "unknown_exception"),

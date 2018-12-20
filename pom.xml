@@ -61,6 +61,7 @@
             <scope>test</scope>
         </dependency>
 
+
         <!-- db -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,6 +79,15 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
+
+        <!-- log -->
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-logback</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+
 
         <!-- util -->
         <dependency>

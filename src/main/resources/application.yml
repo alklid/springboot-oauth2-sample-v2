@@ -12,16 +12,24 @@ api:
   release:
     version: 0.9.1812.1
 
-# log
+# Log level config
+# logging.config=classpath:logback/logback.xml
 logging:
   level:
-    ROOT: info
-    org:
-      hibernate:
-        type: trace
+    org.springframework.web: DEBUG
+    org.springframework.orm: DEBUG
+    org.springframework.transaction: ERROR
+    org.hibernate.type: DEBUG
+  path: ./logs
+  file: ./logs/meditlink-openapi-auth
+
+# spring
+spring:
+  profiles:
+    active: local
 
 # database
-spring:
+# TODO https://github.com/brettwooldridge/HikariCP mysql 설정 변경 필요
   jpa:
     database: mysql
     hibernate:
@@ -37,10 +45,11 @@ spring:
       jdbc-url: jdbc:mysql://127.0.0.1:3306/openapi_local_test?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
       username: openapi
       password: openapi
-      driver-class-name: com.mysql.jdbc.Driver
       minimum-idle: 10
       maximum-pool-size : 20
       idle-timeout: 30000
       pool-name: SpringBootJPAHikariCP
       max-lifetime: 2000000
       connection-timeout: 30000
+      driver-class-name: com.mysql.jdbc.Driver
+

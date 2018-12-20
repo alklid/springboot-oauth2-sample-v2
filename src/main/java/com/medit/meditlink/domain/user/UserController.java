@@ -6,6 +6,7 @@ import com.medit.meditlink.common.Router;
 import com.medit.meditlink.common.exception.GlobalException;
 import com.medit.meditlink.domain.user.model.UserDto;
 import com.medit.meditlink.domain.user.model.UserEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 @CrossOrigin
 @RestController
 @RequestMapping(Router.User.USER)
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -33,10 +35,11 @@ public class UserController {
                     " and hasAuthority('USER:INFO')" +
                     " and @customSecurityPermissionEvaluator.isMe(authentication, #users_email)")
     @RequestMapping(method = RequestMethod.GET, value = "/{users_email}")
-    public ResponseEntity<UserDto.Response> getAccount(HttpServletRequest httpRequest,
+    public ResponseEntity<UserDto.Response> getUser(HttpServletRequest httpRequest,
                                                         @PathVariable("v") String v,
                                                         @PathVariable("s") String s,
                                                         @PathVariable("users_email") String users_email) {
+        log.debug("####### controller getUser debug");
         switch (s) {
             case Constant.SchemaVersion.SCHEMA_1:
             case Constant.SchemaVersion.SCHEMA_LATEST:
@@ -47,17 +50,19 @@ public class UserController {
         }
     }
 
+
     // update Test
     @PreAuthorize(  "isAuthenticated()" +
             " and #oauth2.hasScope('MANAGE')" +
             " and hasAuthority('USER:INFO')" +
             " and @customSecurityPermissionEvaluator.isMe(authentication, #users_email)")
     @RequestMapping(method = RequestMethod.PUT, value = "/{users_email}")
-    public ResponseEntity<UserDto.Response> updateAccount(HttpServletRequest httpRequest,
+    public ResponseEntity<UserDto.Response> updateUser(HttpServletRequest httpRequest,
                                                           @PathVariable("v") String v,
                                                           @PathVariable("s") String s,
                                                           @PathVariable("users_email") String users_email,
                                                           @RequestBody @Valid UserDto.Update user) {
+        log.debug("####### controller updateUser debug");
         switch (s) {
             case Constant.SchemaVersion.SCHEMA_1:
             case Constant.SchemaVersion.SCHEMA_LATEST:

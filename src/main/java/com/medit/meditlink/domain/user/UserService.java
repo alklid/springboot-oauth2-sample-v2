@@ -3,6 +3,7 @@ package com.medit.meditlink.domain.user;
 import com.medit.meditlink.common.exception.UserException;
 import com.medit.meditlink.domain.user.model.UserDto;
 import com.medit.meditlink.domain.user.model.UserEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @EnableJpaAuditing
 @Service
+@Slf4j
 public class UserService implements UserDetailsService {
 
 	@Autowired
@@ -26,7 +28,7 @@ public class UserService implements UserDetailsService {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	// UserDetailsService impl
+	// UserDetailsService impl, oauth2에서 사용자 인증을 위해 사용
 	public UserDetails loadUserByUsername(final String email) {
 		UserEntity user = userRepo.findByEmail(email);
 		if (user == null) {
@@ -40,7 +42,7 @@ public class UserService implements UserDetailsService {
 		);
 	}
 
-	// UserDetailsService impl
+	// 사용자의 권한
 	private List<SimpleGrantedAuthority> getAuthority(final String permissions) {
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		if (permissions == null || "".equals(permissions)) {

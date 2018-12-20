@@ -9,7 +9,7 @@
 ### /api/{v}/account/{users_email}
 GET http://localhost:20000/v1/latest/users/alklid@sample.com
 Content-Type: application/json
-Authorization: Bearer db7577b3-620a-4983-b874-32c4fb46219e
+Authorization: Bearer b325c3f6-8ce1-4df5-88a0-d06c8fdd9f48
 
 ### /api/{v}/account/{users_email} - 403 denied
 GET http://localhost:20000/v1/s1/users/alklid2@sample.com

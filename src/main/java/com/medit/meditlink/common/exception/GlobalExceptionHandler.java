@@ -96,10 +96,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
+    private ResponseEntity<Object> DefaultHandler(final HttpStatus httpStatus,
+                                                  ErrorResponseDto.Error errorResponseDto) {
+        return this.DefaultHandler(null, httpStatus, errorResponseDto);
+    }
+
+
+    private ResponseEntity<Object> DefaultHandler(final Exception e,
+                                                  final HttpStatus httpStatus,
+                                                  ErrorResponseDto.Error errorResponseDto) {
+        return new ResponseEntity<>(modelMapper.map(errorResponseDto, ErrorResponseDto.Response.class), httpStatus);
+    }
+
+
     private ResponseEntity<Object> BadRequestHandler(final GlobalException.BadReqeust e,
                                                      final HttpStatus httpStatus,
                                                      ErrorResponseDto.Error errorResponseDto) {
-        //BindingResult
+        // BindingResult에서 어떤 field가 어떤 이유로 invalid되었는지 확인
         if (e.getBindingResult().hasErrors()) {
             List<String> errors = new ArrayList<>();
             for (FieldError fe : e.getBindingResult().getFieldErrors()) {
@@ -112,18 +125,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    private ResponseEntity<Object> DefaultHandler(final HttpStatus httpStatus,
-                                                  ErrorResponseDto.Error errorResponseDto) {
-        return this.DefaultHandler(null, httpStatus, errorResponseDto);
-    }
-
-
-    private ResponseEntity<Object> DefaultHandler(final Exception e,
-                                                   final HttpStatus httpStatus,
-                                                   ErrorResponseDto.Error errorResponseDto) {
-        return new ResponseEntity<>(modelMapper.map(errorResponseDto, ErrorResponseDto.Response.class), httpStatus);
-    }
-
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(
             Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -134,8 +135,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorResponseDto.setCode(ErrorCodeEnum.ResponseEntityError.getCode(ex));
         errorResponseDto.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
 
+        /*
+        * ResponseEntityExceptionHandler 에서 MethodArgumentNotValidException의 경우,
+        * BindingResult에서 어떤 field가 어떤 이유로 invalid되었는지 확인
+        */
         if (ex instanceof MethodArgumentNotValidException) {
-            //BindingResult
+            // BindingResult
             if (((MethodArgumentNotValidException) ex).getBindingResult().hasErrors()) {
                 List<String> errors = new ArrayList<>();
                 for (FieldError fe : ((MethodArgumentNotValidException) ex).getBindingResult().getFieldErrors()) {

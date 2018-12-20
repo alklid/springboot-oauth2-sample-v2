@@ -1,20 +1,25 @@
 package com.medit.meditlink.common.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 public class ErrorResponseDto {
+
+    /*
+    * TODO Error형식을 아래와 같이 변경해야 함
+    *    {
+    *      "timestamp": "2018-12-19T11:58:34.129+0000",
+    *      "status": 404,
+    *      "error": "Not Found",
+    *      "message": "No handler found for GET /v1/users/alklid@sample.com",
+    *      "path": "/v1/users/alklid@sample.com"
+    *    }
+    */
 
     @Data
     @NoArgsConstructor
