@@ -27,7 +27,7 @@ POST http://localhost:20000/oauth/token
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGhfdGVzdF9jbGllbnRfaWQ6b2F1dGhfdGVzdF9jbGllbnRfc2VjcmV0
 
-code=U6q1ygQDfr5vwzDwYraDDfdh23ovoaDF&state=bn6q6ru91ygkzwo8rfc0s1f7&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A20000%2Fversion&scope=MANAGE
+code=1422OBNzFoxmWVP8VD3FnjbojyBNMq21&state=bn6q6ru91ygkzwo8rfc0s1f7&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A20000%2Fversion&scope=MANAGE
 
 
 

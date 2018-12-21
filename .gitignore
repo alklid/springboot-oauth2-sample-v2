@@ -1,5 +1,9 @@
+### gradle ###
+/build/
 /target/
-!.mvn/wrapper/maven-wrapper.jar
+/out/
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -23,3 +27,6 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### SpringBoot ###
+/logs/
