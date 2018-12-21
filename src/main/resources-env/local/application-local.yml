@@ -23,8 +23,8 @@ spring:
   datasource:
     hikari:
       jdbc-url: jdbc:mysql://127.0.0.1:3306/openapi_local_test?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
-      username: openapi
-      password: openapi
+      username: ENC(wXkfKbmLK2rixb04vjphkw==)
+      password: ENC(SDrbh3k/8j7O4TnU4PrECQ==)
       minimum-idle: 10
       maximum-pool-size : 20
       idle-timeout: 30000
