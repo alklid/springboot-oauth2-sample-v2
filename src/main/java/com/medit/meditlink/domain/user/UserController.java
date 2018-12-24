@@ -44,7 +44,10 @@ public class UserController {
             case Constant.SchemaVersion.SCHEMA_1:
             case Constant.SchemaVersion.SCHEMA_LATEST:
                 UserEntity user = userService.getAccount(users_email);
-                return new ResponseEntity<>(modelMapper.map(user, UserDto.Response.class), HttpStatus.OK);
+
+                UserDto.Response userResponse = modelMapper.map(user, UserDto.Response.class);
+                userResponse.setSchemaVersion(Constant.SchemaVersion.SCHEMA_1);
+                return new ResponseEntity<>(userResponse, HttpStatus.OK);
             default:
                 throw new GlobalException.InvalidSchemaVersion(s);
         }
@@ -67,7 +70,10 @@ public class UserController {
             case Constant.SchemaVersion.SCHEMA_1:
             case Constant.SchemaVersion.SCHEMA_LATEST:
                 UserEntity updateUser = userService.updateAccount(users_email, user);
-                return new ResponseEntity<>(modelMapper.map(updateUser, UserDto.Response.class), HttpStatus.OK);
+
+                UserDto.Response userResponse = modelMapper.map(updateUser, UserDto.Response.class);
+                userResponse.setSchemaVersion(Constant.SchemaVersion.SCHEMA_1);
+                return new ResponseEntity<>(userResponse, HttpStatus.OK);
             default:
                 throw new GlobalException.InvalidSchemaVersion(s);
         }
