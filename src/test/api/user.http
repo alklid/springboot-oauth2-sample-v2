@@ -9,12 +9,13 @@
 ### /api/{v}/account/{users_email}
 GET http://localhost:20000/v1/latest/users/alklid@sample.com
 Content-Type: application/json
-Authorization: Bearer d27b3c6f-fb81-475b-9d94-fcffeeb5fe1f
+Authorization: Bearer 62c7812b-cfaa-4d84-ae8b-1d085591b61b
 
 ### /api/{v}/account/{users_email} - 403 denied
-GET http://localhost:20000/v1/s1/users/alklid2@sample.com
+GET http://localhost:20000/v1/s1/users/alkli2@sample.com
 Content-Type: application/json
-Authorization: Bearer db7577b3-620a-4983-b874-32c4fb46219e
+Accept-Language: en-us
+Authorization: Bearer 62c7812b-cfaa-4d84-ae8b-1d085591b61b
 
 ### /api/{v}/account/{users_email}
 PUT http://localhost:20000/v1/s1/users/alklid@sample.com

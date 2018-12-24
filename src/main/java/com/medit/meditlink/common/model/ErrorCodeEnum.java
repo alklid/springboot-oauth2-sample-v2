@@ -26,20 +26,24 @@ public class ErrorCodeEnum {
         BAD_REQUEST("bad_request", "bad_request"),
         NO_HANDLER_FOUND("no_handler_found", "no_handler_found");
 
-        private String code;
-        private String msg;
+        private String error;
+        private String message;
 
-        GlobalError(String code, String msg) {
-            this.code = code;
-            this.msg = msg;
+        GlobalError(String error, String message) {
+            this.error = error;
+            this.message = message;
         }
 
-        public String getCode() {
-            return this.code;
+        public String getError() {
+            return this.error;
         }
 
-        public String getMsg(String... args) {
-            return this.msg + " [" + String.join(",", args) + "]";
+        public String getMessage() {
+            return message;
+        }
+
+        public String getDetailMessage(String... args) {
+            return this.message + " [" + String.join(",", args) + "]";
         }
     }
 
@@ -47,20 +51,24 @@ public class ErrorCodeEnum {
     public static enum UserError {
         NOT_FOUND("not_found", "not_found");
 
-        private String code;
-        private String msg;
+        private String error;
+        private String message;
 
-        UserError(String code, String msg) {
-            this.code = code;
-            this.msg = msg;
+        UserError(String error, String message) {
+            this.error = error;
+            this.message = message;
         }
 
-        public String getCode() {
-            return this.code;
+        public String getError() {
+            return this.error;
         }
 
-        public String getMsg(String... args) {
-            return this.msg + " [" + String.join(",", args) + "]";
+        public String getMessage() {
+            return this.message;
+        }
+
+        public String getDetailMessage(String... args) {
+            return this.message + " [" + String.join(",", args) + "]";
         }
     }
 
@@ -74,70 +82,125 @@ public class ErrorCodeEnum {
         NOT_FOUND("not_found", "not_found"),
         SERVICE_UNAVAILABLE("service_unavailable", "service_unavailable");
 
-        private String code;
-        private String msg;
+        private String error;
+        private String message;
 
-        ResponseEntityError(String code, String msg) {
-            this.code = code;
-            this.msg = msg;
+        ResponseEntityError(String error, String message) {
+            this.error = error;
+            this.message = message;
         }
 
-        public String getCode() {
-            return this.code;
+        public String getError() {
+            return this.error;
         }
 
-        public String getMsg(String... args) {
-            return this.msg + " [" + String.join(",", args) + "]";
+        public String getMessage() {
+            return this.message;
         }
 
-        public static String getCode(Exception ex) {
+        public String getDetailMessage(String... args) {
+            return this.message + " [" + String.join(",", args) + "]";
+        }
+
+        public static String getError(Exception ex) {
             if (ex instanceof HttpRequestMethodNotSupportedException) {
-                return METHOD_NOT_ALLOWED.getCode();
+                return METHOD_NOT_ALLOWED.getError();
             }
             else if (ex instanceof HttpMediaTypeNotSupportedException) {
-                return UNSUPPORTED_MEDIA_TYPE.getCode();
+                return UNSUPPORTED_MEDIA_TYPE.getError();
             }
             else if (ex instanceof HttpMediaTypeNotAcceptableException) {
-                return NOT_ACCEPTABLE.getCode();
+                return NOT_ACCEPTABLE.getError();
             }
             else if (ex instanceof MissingPathVariableException) {
-                return INTERNAL_SERVER_ERROR.getCode();
+                return INTERNAL_SERVER_ERROR.getError();
             }
             else if (ex instanceof MissingServletRequestParameterException) {
-                return BAD_REQUEST.getCode();
+                return BAD_REQUEST.getError();
             }
             else if (ex instanceof ServletRequestBindingException) {
-                return BAD_REQUEST.getCode();
+                return BAD_REQUEST.getError();
             }
             else if (ex instanceof ConversionNotSupportedException) {
-                return INTERNAL_SERVER_ERROR.getCode();
+                return INTERNAL_SERVER_ERROR.getError();
             }
             else if (ex instanceof TypeMismatchException) {
-                return BAD_REQUEST.getCode();
+                return BAD_REQUEST.getError();
             }
             else if (ex instanceof HttpMessageNotReadableException) {
-                return BAD_REQUEST.getCode();
+                return BAD_REQUEST.getError();
             }
             else if (ex instanceof HttpMessageNotWritableException) {
-                return INTERNAL_SERVER_ERROR.getCode();
+                return INTERNAL_SERVER_ERROR.getError();
             }
             else if (ex instanceof MethodArgumentNotValidException) {
-                return BAD_REQUEST.getCode();
+                return BAD_REQUEST.getError();
             }
             else if (ex instanceof MissingServletRequestPartException) {
-                return BAD_REQUEST.getCode();
+                return BAD_REQUEST.getError();
             }
             else if (ex instanceof BindException) {
-                return BAD_REQUEST.getCode();
+                return BAD_REQUEST.getError();
             }
             else if (ex instanceof NoHandlerFoundException) {
-                return NOT_FOUND.getCode();
+                return NOT_FOUND.getError();
             }
             else if (ex instanceof AsyncRequestTimeoutException) {
-                return SERVICE_UNAVAILABLE.getCode();
+                return SERVICE_UNAVAILABLE.getError();
             }
             else {
-                return INTERNAL_SERVER_ERROR.getCode();
+                return INTERNAL_SERVER_ERROR.getError();
+            }
+        }
+
+        public static String getMessage(Exception ex) {
+            if (ex instanceof HttpRequestMethodNotSupportedException) {
+                return METHOD_NOT_ALLOWED.getMessage();
+            }
+            else if (ex instanceof HttpMediaTypeNotSupportedException) {
+                return UNSUPPORTED_MEDIA_TYPE.getMessage();
+            }
+            else if (ex instanceof HttpMediaTypeNotAcceptableException) {
+                return NOT_ACCEPTABLE.getMessage();
+            }
+            else if (ex instanceof MissingPathVariableException) {
+                return INTERNAL_SERVER_ERROR.getMessage();
+            }
+            else if (ex instanceof MissingServletRequestParameterException) {
+                return BAD_REQUEST.getMessage();
+            }
+            else if (ex instanceof ServletRequestBindingException) {
+                return BAD_REQUEST.getMessage();
+            }
+            else if (ex instanceof ConversionNotSupportedException) {
+                return INTERNAL_SERVER_ERROR.getMessage();
+            }
+            else if (ex instanceof TypeMismatchException) {
+                return BAD_REQUEST.getMessage();
+            }
+            else if (ex instanceof HttpMessageNotReadableException) {
+                return BAD_REQUEST.getMessage();
+            }
+            else if (ex instanceof HttpMessageNotWritableException) {
+                return INTERNAL_SERVER_ERROR.getMessage();
+            }
+            else if (ex instanceof MethodArgumentNotValidException) {
+                return BAD_REQUEST.getMessage();
+            }
+            else if (ex instanceof MissingServletRequestPartException) {
+                return BAD_REQUEST.getMessage();
+            }
+            else if (ex instanceof BindException) {
+                return BAD_REQUEST.getMessage();
+            }
+            else if (ex instanceof NoHandlerFoundException) {
+                return NOT_FOUND.getMessage();
+            }
+            else if (ex instanceof AsyncRequestTimeoutException) {
+                return SERVICE_UNAVAILABLE.getMessage();
+            }
+            else {
+                return INTERNAL_SERVER_ERROR.getMessage();
             }
         }
     }

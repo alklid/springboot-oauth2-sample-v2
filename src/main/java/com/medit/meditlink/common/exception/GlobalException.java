@@ -88,13 +88,15 @@ public class GlobalException {
 
 				// error info
 				int statusCode = OAuthResult.getStatusCode().value();
-				String code = OAuthResult.getBody().getOAuth2ErrorCode();
+				String error = OAuthResult.getBody().getOAuth2ErrorCode();
+				String message = OAuthResult.getBody().getMessage();
 				String path = getPath();
 
 				ErrorResponseDto.Response errorResponse = new ErrorResponseDto.Response();
 				errorResponse.setTimestamp(Instant.now());
 				errorResponse.setStatus(statusCode);
-				errorResponse.setCode(code);
+				errorResponse.setError(error);
+				errorResponse.setMessage(message);
 				errorResponse.setPath(path);
 				ResponseEntity<ErrorResponseDto.Response> result = new ResponseEntity<>(errorResponse, OAuthResult.getStatusCode());
 

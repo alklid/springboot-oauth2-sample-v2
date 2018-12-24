@@ -49,25 +49,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         if (ex instanceof GlobalException.InvalidAPIVersion) {
             status = HttpStatus.BAD_REQUEST;
             errorResponseDto.setStatus(status.value());
-            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.INVALID_API_VERSION.getCode());
+            errorResponseDto.setError(ErrorCodeEnum.GlobalError.INVALID_API_VERSION.getError());
+            errorResponseDto.setMessage(ErrorCodeEnum.GlobalError.INVALID_API_VERSION.getMessage());
             return this.DefaultHandler(status, errorResponseDto);
         }
         else if (ex instanceof GlobalException.InvalidSchemaVersion) {
             status = HttpStatus.FORBIDDEN;
             errorResponseDto.setStatus(status.value());
-            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.INVALID_SCHEMA_VERSION.getCode());
+            errorResponseDto.setError(ErrorCodeEnum.GlobalError.INVALID_SCHEMA_VERSION.getError());
+            errorResponseDto.setMessage(ErrorCodeEnum.GlobalError.INVALID_SCHEMA_VERSION.getMessage());
             return this.DefaultHandler(status, errorResponseDto);
         }
         else if (ex instanceof GlobalException.AccessDenied) {
             status = HttpStatus.FORBIDDEN;
             errorResponseDto.setStatus(status.value());
-            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.ACCESS_DENIED.getCode());
+            errorResponseDto.setError(ErrorCodeEnum.GlobalError.ACCESS_DENIED.getError());
+            errorResponseDto.setMessage(ErrorCodeEnum.GlobalError.ACCESS_DENIED.getMessage());
             return this.DefaultHandler(status, errorResponseDto);
         }
         else if (ex instanceof GlobalException.BadReqeust) {
             status = HttpStatus.BAD_REQUEST;
             errorResponseDto.setStatus(status.value());
-            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.BAD_REQUEST.getCode());
+            errorResponseDto.setError(ErrorCodeEnum.GlobalError.BAD_REQUEST.getError());
+            errorResponseDto.setMessage(ErrorCodeEnum.GlobalError.BAD_REQUEST.getMessage());
             return this.BadRequestHandler((GlobalException.BadReqeust) ex, status, errorResponseDto);
         }
 
@@ -75,14 +79,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         else if (ex instanceof UserException.NotFound) {
             status = HttpStatus.NOT_FOUND;
             errorResponseDto.setStatus(status.value());
-            errorResponseDto.setCode(ErrorCodeEnum.UserError.NOT_FOUND.getCode());
+            errorResponseDto.setError(ErrorCodeEnum.UserError.NOT_FOUND.getError());
+            errorResponseDto.setMessage(ErrorCodeEnum.UserError.NOT_FOUND.getMessage());
             return this.DefaultHandler(status, errorResponseDto);
         }
 
         else if (ex instanceof NoHandlerFoundException) {
             status = HttpStatus.NOT_FOUND;
             errorResponseDto.setStatus(status.value());
-            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.NO_HANDLER_FOUND.getCode());
+            errorResponseDto.setError(ErrorCodeEnum.GlobalError.NO_HANDLER_FOUND.getError());
+            errorResponseDto.setMessage(ErrorCodeEnum.GlobalError.NO_HANDLER_FOUND.getMessage());
             return this.DefaultHandler(status, errorResponseDto);
         }
 
@@ -90,7 +96,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             errorResponseDto.setStatus(status.value());
-            errorResponseDto.setCode(ErrorCodeEnum.GlobalError.UNKNOWN_EXCEPTION.getCode());
+            errorResponseDto.setError(ErrorCodeEnum.GlobalError.UNKNOWN_EXCEPTION.getError());
+            errorResponseDto.setMessage(ErrorCodeEnum.GlobalError.UNKNOWN_EXCEPTION.getMessage());
             return this.DefaultHandler(status, errorResponseDto);
         }
     }
@@ -118,7 +125,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             for (FieldError fe : e.getBindingResult().getFieldErrors()) {
                 errors.add("[" + fe.getField() + "] " + fe.getDefaultMessage());
             }
-            errorResponseDto.setErrors(errors);
+            errorResponseDto.setAddInfo(errors);
         }
 
         return new ResponseEntity<>(modelMapper.map(errorResponseDto, ErrorResponseDto.Response.class), httpStatus);
@@ -132,7 +139,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponseDto.Error errorResponseDto = new ErrorResponseDto.Error();
         errorResponseDto.setTimestamp(Instant.now());
         errorResponseDto.setStatus(status.value());
-        errorResponseDto.setCode(ErrorCodeEnum.ResponseEntityError.getCode(ex));
+        errorResponseDto.setError(ErrorCodeEnum.ResponseEntityError.getError(ex));
+        errorResponseDto.setMessage(ErrorCodeEnum.ResponseEntityError.getMessage(ex));
         errorResponseDto.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
 
         /*
@@ -146,7 +154,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 for (FieldError fe : ((MethodArgumentNotValidException) ex).getBindingResult().getFieldErrors()) {
                     errors.add("[" + fe.getField() + "] " + fe.getDefaultMessage());
                 }
-                errorResponseDto.setErrors(errors);
+                errorResponseDto.setAddInfo(errors);
             }
         }
 

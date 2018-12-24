@@ -33,7 +33,8 @@ public class CustomOAuthExceptionHandler extends AbstractOAuth2SecurityException
             ErrorResponseDto.Response errorResponse = new ErrorResponseDto.Response();
             errorResponse.setTimestamp(Instant.now());
             errorResponse.setStatus(oAuth2Exception.getHttpErrorCode());
-            errorResponse.setCode(oAuth2Exception.getOAuth2ErrorCode());
+            errorResponse.setError(oAuth2Exception.getOAuth2ErrorCode());
+            errorResponse.setMessage(oAuth2Exception.getMessage());
             errorResponse.setPath("/oauth/token");
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
