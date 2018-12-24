@@ -5,7 +5,7 @@
 
     <!-- 속성 설정 -->
     <property name="LOG_FILE"
-              value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}meditlink}"/>
+              value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}alklid}"/>
 
     <!--<pattern>%d %a [%thread] %-5level %logger{36} - %msg%n</pattern>-->
     <!-- a: Remote ip address, i{header}: Request header -->
@@ -13,7 +13,7 @@
               value="%d [%-5level][%-8.8thread] %logger{64}::%M - %msg%n"/>
 
     <!-- Appender 설정 -->
-    <appender name="MEDIT-DEBUG"
+    <appender name="ALKLID-DEBUG"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>DEBUG</level>
@@ -28,7 +28,7 @@
         </encoder>
     </appender>
 
-    <appender name="MEDIT-INFO"
+    <appender name="ALKLID-INFO"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
@@ -45,7 +45,7 @@
         </encoder>
     </appender>
 
-    <appender name="MEDIT-INDICATOR"
+    <appender name="ALKLID-INDICATOR"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
@@ -62,7 +62,7 @@
         </encoder>
     </appender>
 
-    <appender name="MEDIT-ERROR"
+    <appender name="ALKLID-ERROR"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
@@ -87,46 +87,31 @@
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="MEDIT-INFO"/>
-        <appender-ref ref="MEDIT-ERROR"/>
+        <appender-ref ref="ALKLID-INFO"/>
+        <appender-ref ref="ALKLID-ERROR"/>
         <appender-ref ref="SENTRY"/>
     </root>
 
     <!-- 실행 환경 -->
     <springProfile name="local, dev, dev-kr, dev-us">
         <logger name="org.springframework.web" level="DEBUG">
-            <appender-ref ref="MEDIT-DEBUG"/>
+            <appender-ref ref="ALKLID-DEBUG"/>
         </logger>
         <logger name="org.hibernate" level="DEBUG">
-            <appender-ref ref="MEDIT-DEBUG"/>
+            <appender-ref ref="ALKLID-DEBUG"/>
         </logger>
-        <logger name="com.medit.meditlink" level="DEBUG">
-            <appender-ref ref="MEDIT-DEBUG"/>
+        <logger name="com.alklid.oauth" level="DEBUG">
+            <appender-ref ref="ALKLID-DEBUG"/>
         </logger>
-        <!--
-        <logger name="com.medit.meditlink.api.service.order" level="INFO">
-            <appender-ref ref="MEDIT-INDICATOR"/>
-        </logger>
-        -->
     </springProfile>
 
     <springProfile name="stage-us, stage-kr, stage-eu">
-        <logger name="com.medit.collab" level="DEBUG">
-            <appender-ref ref="MEDIT-DEBUG"/>
+        <logger name="com.alklid.oauth" level="DEBUG">
+            <appender-ref ref="ALKLID-DEBUG"/>
         </logger>
-        <!--
-        <logger name="com.medit.collab.api.service.order" level="INFO">
-            <appender-ref ref="MEDIT-INDICATOR"/>
-        </logger>
-        -->
     </springProfile>
 
     <springProfile name="prod-us, prod-kr, prod-eu">
-        <!--
-        <logger name="com.medit.collab.api.service.order" level="INFO">
-            <appender-ref ref="MEDIT-INDICATOR"/>
-        </logger>
-        -->
     </springProfile>
 
 </configuration>

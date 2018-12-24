@@ -14,7 +14,7 @@ logging:
     org.springframework.transaction: ERROR
     org.hibernate.type: DEBUG
   path: ./logs
-  file: ./logs/meditlink-openapi-auth
+  file: ./logs/alklid-auth
 
 # spring
 spring:
